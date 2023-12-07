@@ -68,28 +68,77 @@ def delete_department():
 # You'll implement the employee functions in the lab
 
 def list_employees():
+    employees = Employee.get_all()
+    for employee in employees:
+        print(employee)
     pass
 
 
 def find_employee_by_name():
+    name = input("Enter employee's name: ")
+    if employee := Employee.find_by_name(name):
+        print(employee)
+    else:
+        print(f"Employee {name} not found.")
     pass
 
 
 def find_employee_by_id():
-    pass
+    id_ = input("Enter employee's ID: ")
+    if employee := Employee.find_by_id(id_):
+        print(employee)
+    else:
+        print(f"Employee {id_} not found.")
 
 
 def create_employee():
-    pass
+    name = input("Employee name: ")
+    job_title = input("Employee job: ")
+    department_id = int(input("Department ID: "))
+    try:
+        employee = Employee.create(name, job_title, department_id)
+        print(f"Success: {employee}")
+    except Exception as exc:
+        print("Exception: ", exc)
 
 
 def update_employee():
+    id_ = int(input("Employee to update: "))
+    if employee := Employee.find_by_id(id_):
+        try:
+            employee.name = input("New name: ")
+            employee.job_title = input("New job: ")
+            employee.update()
+            print(f'Employee updated: {employee.name}')
+        except Exception as exc:
+            print("Exception error: ", exc)
+    else:
+        print(f'Employee {id_} not found')
     pass
 
 
 def delete_employee():
-    pass
+    id_ = int(input("Employee to update: "))
+    if employee := Employee.find_by_id(id_):
+        try:
+            employee.delete()
+            print(f'Employee deleted: {employee.name}')
+        except Exception as exc:
+            print("Exception error: ", exc)
+    else:
+        print(f'Employee {id_} not found')
 
 
 def list_department_employees():
-    pass
+    id_ = int(input("Department to employees: "))
+    if department := Department.find_by_id(id_):
+        try:
+            employees = department.employees()
+            for employee in employees:
+                print(employee)
+        except Exception as exc:
+            print('Exception: ', exc)
+    else:
+        print(f'Dempartment {id_} does not exist')
+
+    
