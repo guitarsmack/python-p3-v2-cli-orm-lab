@@ -23,3 +23,4 @@ def seed_database():
 
 seed_database()
 print("Seeded database")
+#test upload on new device
